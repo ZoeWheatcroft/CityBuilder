@@ -67,7 +67,8 @@ void ABasePlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 		Input->BindAction(VerticalNavigationAction, ETriggerEvent::Completed, this, &ABasePlayerPawn::Move_YAxis);
 		Input->BindAction(ZoomNavigationAction, ETriggerEvent::Triggered, this, &ABasePlayerPawn::Zoom_Camera);
 		Input->BindAction(ZoomNavigationAction, ETriggerEvent::Completed, this, &ABasePlayerPawn::Zoom_Camera);
-
+		
+		Input->BindAction(SwitchModeAction, ETriggerEvent::Triggered, this, &ABasePlayerPawn::SwitchMode);
 
 	}
 
@@ -102,7 +103,23 @@ void ABasePlayerPawn::Zoom_Camera(const FInputActionInstance& Instance)
 	CameraZoomAcceleration = Instance.GetValue().Get<float>()*CameraDefaultZoom;
 }
 
+void ABasePlayerPawn::SwitchMode(const FInputActionInstance& Instance)
+{
+	UWorldManagerSubsystem* WorldManagerSubsystem = this->GetWorld()->GetSubsystem<UWorldManagerSubsystem>();
+	EPlayerGameMode PlayerGameMode = WorldManagerSubsystem->PlayerGameMode;
+	if (PlayerGameMode == EPlayerGameMode::Play)
+	{
+		WorldManagerSubsystem->SwitchPlayerGameMode(EPlayerGameMode::Build, this);
+	}
+	else
+	{
+		WorldManagerSubsystem->SwitchPlayerGameMode(EPlayerGameMode::Play, this);
+	}
+}
+
 void ABasePlayerPawn::Click(const FInputActionInstance& Instance)
 {
+
+
 }
 

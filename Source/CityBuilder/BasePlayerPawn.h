@@ -7,6 +7,7 @@
 //#include "Camera/CameraComponent.h"
 #include "InputAction.h"
 #include <EnhancedInputSubsystems.h>
+#include "WorldManagerSubsystem.h"
 
 #include "BasePlayerPawn.generated.h"
 
@@ -49,12 +50,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* ZoomNavigationAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* SwitchModeAction;
 
 private:
 	UPROPERTY(EditAnywhere)
 	float CameraZoom = 250.0f;
 	UPROPERTY(EditAnywhere)
-	float CameraMaxZoom = 1000.0f;
+	float CameraMaxZoom = 1500.0f;
 	UPROPERTY(EditAnywhere)
 	float CameraMinZoom = 50.0f;
 	UPROPERTY(EditAnywhere)
@@ -77,6 +80,7 @@ private:
 	void Move_XAxis(const FInputActionInstance& Instance);
 	void Move_YAxis(const FInputActionInstance& Instance);
 	void Zoom_Camera(const FInputActionInstance& Instance);
+	void SwitchMode(const FInputActionInstance& Instance);
 
 	void Click(const FInputActionInstance& Instance);
 
